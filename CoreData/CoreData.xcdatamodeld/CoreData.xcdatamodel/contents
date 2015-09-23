@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14F27" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="OPCourse" representedClassName="OPCourse" parentEntity="OPObject" syncable="YES">
+        <attribute name="branch" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="students" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPStudent" inverseName="courses" inverseEntity="OPStudent" syncable="YES"/>
+        <relationship name="subject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPCourseSubject" inverseName="courses" inverseEntity="OPCourseSubject" syncable="YES"/>
+        <relationship name="teacher" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPTeacher" inverseName="courses" inverseEntity="OPTeacher" syncable="YES"/>
+    </entity>
+    <entity name="OPCourseSubject" representedClassName="OPCourseSubject" parentEntity="OPObject" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="courses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPCourse" inverseName="subject" inverseEntity="OPCourse" syncable="YES"/>
+    </entity>
+    <entity name="OPObject" representedClassName="OPObject" syncable="YES"/>
+    <entity name="OPStudent" representedClassName="OPStudent" parentEntity="OPUser" syncable="YES">
+        <relationship name="courses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPCourse" inverseName="students" inverseEntity="OPCourse" syncable="YES"/>
+    </entity>
+    <entity name="OPTeacher" representedClassName="OPTeacher" parentEntity="OPUser" syncable="YES">
+        <relationship name="courses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPCourse" inverseName="teacher" inverseEntity="OPCourse" syncable="YES"/>
+    </entity>
+    <entity name="OPUser" representedClassName="OPUser" parentEntity="OPObject" syncable="YES">
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="OPCourse" positionX="2860" positionY="1251" width="128" height="118"/>
+        <element name="OPCourseSubject" positionX="3022" positionY="1251" width="128" height="73"/>
+        <element name="OPObject" positionX="2905" positionY="1161" width="128" height="43"/>
+        <element name="OPStudent" positionX="2527" positionY="1508" width="128" height="58"/>
+        <element name="OPTeacher" positionX="3130" positionY="1508" width="128" height="58"/>
+        <element name="OPUser" positionX="2574" positionY="1271" width="128" height="88"/>
+    </elements>
+</model>
