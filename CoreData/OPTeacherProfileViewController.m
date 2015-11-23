@@ -144,6 +144,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     
+    [super viewWillAppear:animated];
+    
     if (!self.isCoursesArrayChangedInCoursesPickerDelegate) {
         
         self.coursesOfCurrentTeacherArray = [self fetchCoursesOfCurrentTeacherArray];
@@ -483,12 +485,20 @@
 // Clicking on the cell with course you go to the screen for editing the chosen course information - course profile controller
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    OPCourse *course = [self.coursesOfCurrentTeacherArray objectAtIndex:indexPath.row - 1]; // (- 1) is due to the fact that we have added the first cell with two buttons that increased array of rows in the second section by 1
-    
-    OPCourseProfileViewController *vc = [[OPCourseProfileViewController alloc] init];
-    vc.course = course;
-    
-    [self.navigationController pushViewController:vc animated:YES];
+    if (indexPath.row) {
+        
+        OPCourse *course = [self.coursesOfCurrentTeacherArray objectAtIndex:indexPath.row - 1]; // (- 1) is due to the fact that we have added the first cell with two buttons that increased array of rows in the second section by 1
+        
+        OPCourseProfileViewController *vc = [[OPCourseProfileViewController alloc] init];
+        vc.course = course;
+        
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    } else {
+        
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+    }
     
 }
 
