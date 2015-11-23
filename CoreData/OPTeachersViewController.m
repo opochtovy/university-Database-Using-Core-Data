@@ -48,6 +48,8 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     
+    [super viewWillAppear:animated];
+    
     self.nonzeroTeachersGroupedBySubjectArray = [self fetchNonzeroTeachersGroupedBySubjectArray];
     
     self.teachersWithoutCoursesArray = [self fetchTeachersWithoutCoursesArray];
@@ -196,7 +198,7 @@
     }
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", teacher.firstName, teacher.lastName];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [teacher.courses count]];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)[teacher.courses count]];
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }
