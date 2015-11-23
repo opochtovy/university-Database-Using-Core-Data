@@ -101,9 +101,12 @@ static int emailsCount = 3;
         NSUInteger who = arc4random_uniform(1000);
      
         if (who < 900) {
-            OPStudent *student = [self addRandomStudent];
+            
+            [self addRandomStudent];
+            
         } else {
-            OPTeacher *teacher = [self addRandomTeacher];
+            
+            [self addRandomTeacher];
         }
     }
  
@@ -121,16 +124,21 @@ static int emailsCount = 3;
      
     OPCourseSubject *subject3 = [NSEntityDescription insertNewObjectForEntityForName:@"OPCourseSubject" inManagedObjectContext:self.managedObjectContext];
     subject3.name = @"Chemistry";
-     
-    OPCourse *course1 = [self addCourseWithName:@"iOS" subject:subject1 branch:@"Computer science" teacherFromArray:teachers studentsFromArray:students];
-     
-    OPCourse *course2 = [self addCourseWithName:@"PHP" subject:subject1 branch:@"Computer science" teacherFromArray:teachers studentsFromArray:students];
-     
-    OPCourse *course3 = [self addCourseWithName:@"Anatomy" subject:subject2 branch:@"Natural Sciences" teacherFromArray:teachers studentsFromArray:students];
-     
-    OPCourse *course4 = [self addCourseWithName:@"Plants" subject:subject2 branch:@"Natural Sciences" teacherFromArray:teachers studentsFromArray:students];
-     
-    OPCourse *course5 = [self addCourseWithName:@"Organic Chemistry" subject:subject3 branch:@"Natural Sciences" teacherFromArray:teachers studentsFromArray:students];
+
+    // course1
+    [self addCourseWithName:@"iOS" subject:subject1 branch:@"Computer science" teacherFromArray:teachers studentsFromArray:students];
+
+    // course2
+    [self addCourseWithName:@"PHP" subject:subject1 branch:@"Computer science" teacherFromArray:teachers studentsFromArray:students];
+
+    // course3
+    [self addCourseWithName:@"Anatomy" subject:subject2 branch:@"Natural Sciences" teacherFromArray:teachers studentsFromArray:students];
+
+    // course4
+    [self addCourseWithName:@"Plants" subject:subject2 branch:@"Natural Sciences" teacherFromArray:teachers studentsFromArray:students];
+ 
+    // course5
+    [self addCourseWithName:@"Organic Chemistry" subject:subject3 branch:@"Natural Sciences" teacherFromArray:teachers studentsFromArray:students];
     
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"%@", [error localizedDescription]);
@@ -139,7 +147,7 @@ static int emailsCount = 3;
     // end of "That code..."
 }
 
-- (OPStudent *)addRandomStudent {
+- (void)addRandomStudent {
     
     OPStudent *student = [NSEntityDescription insertNewObjectForEntityForName:@"OPStudent" inManagedObjectContext:self.managedObjectContext];
     
@@ -150,11 +158,9 @@ static int emailsCount = 3;
     
     [self.studentLastNames addObject:student.lastName];
     
-    return student;
-    
 }
 
-- (OPTeacher *)addRandomTeacher {
+- (void)addRandomTeacher {
     
     OPTeacher *teacher = [NSEntityDescription insertNewObjectForEntityForName:@"OPTeacher" inManagedObjectContext:self.managedObjectContext];
     
@@ -171,12 +177,9 @@ static int emailsCount = 3;
     
     teacher.email = [NSString stringWithFormat:@"%c%@@%@", [[teacher.firstName lowercaseString] characterAtIndex:0], [teacher.lastName lowercaseString], emails[arc4random_uniform(emailsCount)]];
     
-    return teacher;
-    
 }
 
-- (OPCourse *)addCourseWithName:(NSString *)name subject:(OPCourseSubject *)subject branch:(NSString *)branch teacherFromArray:(NSArray *)teachers studentsFromArray:(NSArray *)students {
-    
+- (void)addCourseWithName:(NSString *)name subject:(OPCourseSubject *)subject branch:(NSString *)branch teacherFromArray:(NSArray *)teachers studentsFromArray:(NSArray *)students {
     OPCourse *course = [NSEntityDescription insertNewObjectForEntityForName:@"OPCourse" inManagedObjectContext:self.managedObjectContext];
     
     course.name = name;
@@ -203,7 +206,6 @@ static int emailsCount = 3;
         }
     }
     
-    return course;
 }
 
 - (NSArray *)allObjects {
