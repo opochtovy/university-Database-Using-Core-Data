@@ -197,6 +197,8 @@ typedef enum {
 
 - (void)viewWillAppear:(BOOL)animated {
     
+    [super viewWillAppear:animated];
+    
     if ( (self.isStudentsArrayChangedInStudentsPickerDelegate) || (self.isTeacherChangedInTeacherPickerDelegate) || (self.isSubjectChangedInSubjectPickerDelegate) ) {
         
         self.isStudentsArrayChangedInStudentsPickerDelegate = NO;
@@ -329,7 +331,7 @@ typedef enum {
         
     } else if ([sender isKindOfClass:[UITextField class]]) {
 
-        CGRect rectInSelfView;
+        CGRect rectInSelfView = CGRectMake(0, 0, 0, 0);
         
         popover.popoverContentSize = CGSizeMake(320, 320);
         
@@ -578,14 +580,22 @@ typedef enum {
 // Clicking on the cell with student you go to the screen for editing the student information - student profile controller
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    OPStudent *student = [self.studentsOfCurrentCourseArray objectAtIndex:indexPath.row - 1]; // (- 1) is due to the fact that we have added the first cell with two buttons that increased array of rows in the second section by 1
-    
-    OPUserProfileViewController *vc = [[OPUserProfileViewController alloc] init];
-    vc.user = student;
-    
-    vc.delegate = self;
-    
-    [self.navigationController pushViewController:vc animated:YES];
+    if (indexPath.row) {
+        
+        OPStudent *student = [self.studentsOfCurrentCourseArray objectAtIndex:indexPath.row - 1]; // (- 1) is due to the fact that we have added the first cell with two buttons that increased array of rows in the second section by 1
+        
+        OPUserProfileViewController *vc = [[OPUserProfileViewController alloc] init];
+        vc.user = student;
+        
+        vc.delegate = self;
+        
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    } else {
+        
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+    }
     
 }
 
