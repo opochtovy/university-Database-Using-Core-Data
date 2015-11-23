@@ -44,8 +44,8 @@ typedef enum {
 
 @property (strong, nonatomic) NSArray *coursesOfCurrentUserArray;
 
-@property (nonatomic, weak) UIButton *deleteButton;
-@property (nonatomic, weak) UIButton *addButton;
+@property (nonatomic, strong) UIButton *deleteButton;
+@property (nonatomic, strong) UIButton *addButton;
 @property (weak, nonatomic) UITableViewCell *addCoursesButtonCell;
 
 @property (strong, nonatomic) NSArray *allCoursesArray;
@@ -179,6 +179,8 @@ typedef enum {
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
     
 //    self.coursesOfCurrentUserArray = [self fetchCoursesOfCurrentUserArray];
     
@@ -479,12 +481,20 @@ typedef enum {
 // Clicking on the cell with course you go to the screen for editing the course information - course profile controller
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    OPCourse *course = [self.coursesOfCurrentUserArray objectAtIndex:indexPath.row - 1]; // (- 1) is due to the fact that we have added the first cell with two buttons that increased array of rows in the second section by 1
-    
-    OPCourseProfileViewController *vc = [[OPCourseProfileViewController alloc] init];
-    vc.course = course;
-    
-    [self.navigationController pushViewController:vc animated:YES];
+    if (indexPath.row) {
+        
+        OPCourse *course = [self.coursesOfCurrentUserArray objectAtIndex:indexPath.row - 1]; // (- 1) is due to the fact that we have added the first cell with two buttons that increased array of rows in the second section by 1
+        
+        OPCourseProfileViewController *vc = [[OPCourseProfileViewController alloc] init];
+        vc.course = course;
+        
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    } else {
+        
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+    }
     
 }
 
